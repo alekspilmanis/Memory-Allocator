@@ -3,8 +3,23 @@ import java.io.*;
 public class Mallocator {
     public static void main(String[] args) {
 
+
+        /*
+         * FORMAT FOR INPUT.DATA:
+         * 
+         * # of Memory slots
+         * Memslot1StartAddress Memslot1EndAddress
+         * ...
+         * ...
+         * # of Processes
+         * Process1ID Process1Size
+         * ...
+         * ...
+         */
+
+
         //stores memory input info
-        ArrayList<String> minput = readFile("C:\\Users\\aleks\\OneDrive\\Desktop\\OS Project\\minput.data");
+        ArrayList<String> minput = readFile("input.data");
 
         //converts data into memorySlot objects
         int memSlots = Integer.parseInt(minput.get(0));
@@ -16,17 +31,18 @@ public class Mallocator {
             memory.add(mem);
         }
 
-        //stores process input info
-        ArrayList<String> pinput = readFile("C:\\Users\\aleks\\OneDrive\\Desktop\\OS Project\\pinput.data");
-
         //converts data into process objects
-        int processes = Integer.parseInt(pinput.get(0));
+        int processes = Integer.parseInt(minput.get(memSlots+1));
         ArrayList<Process> process = new ArrayList<Process>();
 
-        for (int i = 1; i < processes+1; i++) {
-            String[] y = pinput.get(i).split(" ");
+        for (int i = memSlots+2; i < memSlots + processes + 2; i++) {
+            String[] y = minput.get(i).split(" ");
             Process pro = new Process(Integer.parseInt(y[0]), Integer.parseInt(y[1]));
             process.add(pro);
+        }
+
+        for (int i = 0; i < process.size(); i++) {
+            System.out.println(process.get(i));
         }
 
         //Call each method
